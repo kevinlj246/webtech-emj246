@@ -6,9 +6,11 @@
 	include('functions.php');
 
 		//Get data from the form
-	$comment = sanitizeString($_POST['comment']);
-    $PID = sanitizeString($_POST['PID']);
-    $username = sanitizeString($_POST['username']);
+	$comment = $_POST['comment'];
+    	$PID = $_POST['PID'];
+    	$username = $_POST['username'];
+   	sanitizeString($username);
+
 
 	//connect to DB
 	$conn = connect_db();
@@ -16,8 +18,13 @@
 	$row = mysqli_fetch_assoc($result);
 
 	//Fetch User information	
-	$name = sanitizeString($row["name"]);
-	$UID = sanitizeString($row["id"]);
+	$name = $row["name"];
+	$UID = $row["id"];
+
+	sanitizeString($comment);
+	sanitizeString($PID);
+	sanitizeString($name);
+	sanitizeString($UID);
 
 	$result_insert = mysqli_query($conn, "INSERT INTO comments(postID, comment, userID, nameOfUser) VALUES ('$PID', '$comment', $UID, '$name')");
 
